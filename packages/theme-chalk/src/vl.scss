@@ -1,0 +1,14 @@
+@use 'mixins/mixins.scss' as *;
+
+@include b(vl) {
+  overflow-y: scroll;
+  position: relative;
+  border: 2px solid #eee;
+
+  @include e('scroll-list') {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

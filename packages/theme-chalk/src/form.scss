@@ -1,0 +1,27 @@
+@use 'mixins/mixins' as *;
+@use 'common/var' as *;
+
+@include b(form-item) {
+  display: flex;
+
+  @include e(label) {
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-right: 8px;
+    height: 32px;
+    line-height: 32px;
+  }
+
+  @include e(content) {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  @include e(error) {
+    color: $color-danger;
+    font-size: 12px;
+  }
+}

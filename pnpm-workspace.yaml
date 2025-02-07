@@ -1,0 +1,4 @@
+packages:
+  - playground # 存放组件测试时的代码
+  - docs # 存放组件文档
+  - "packages/**" # 存放编写的组件（及子包）
