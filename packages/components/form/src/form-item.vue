@@ -1,11 +1,5 @@
 <template>
-  <div
-    :class="[
-      bem.b(),
-      bem.is('success', validateState === 'success'),
-      bem.is('error', validateState === 'error')
-    ]"
-  >
+  <div :class="[bem.b()]">
     <label
       :class="bem.e('label')"
       :style="{
@@ -17,7 +11,9 @@
       </slot>
     </label>
     <div :class="bem.e('content')">
-      <slot />
+      <div :class="[bem.e('wrapper')]">
+        <slot />
+      </div>
       <div v-if="showMessage" :class="bem.e('error')">
         <slot name="error">
           {{ validateMessage }}
@@ -32,7 +28,7 @@ import { createNamespace } from '@nova-ui/utils/create'
 import { computed, inject, onMounted, provide, ref } from 'vue'
 import {
   Arrayable,
-  formItemContextKey,
+  FormItemContextKey,
   FormItemContxt,
   formItemProps,
   FormItemRule,
@@ -51,7 +47,6 @@ defineOptions({
 const props = defineProps(formItemProps)
 
 const formContent = inject(FormContextKey)
-console.log('formContent: ', formContent)
 
 const labelWidth = computed(() => {
   const width =
@@ -152,9 +147,10 @@ const clearValidate = () => {
 const context: FormItemContxt = {
   ...props,
   validate,
+  validateState,
   clearValidate
 }
-provide(formItemContextKey, context)
+provide(FormItemContextKey, context)
 
 onMounted(() => {
   formContent?.addField(context) // 将自身的上下文传递给了父亲

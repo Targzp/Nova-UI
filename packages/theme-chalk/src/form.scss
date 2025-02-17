@@ -16,8 +16,13 @@
   @include e(content) {
     display: flex;
     flex: 1;
+    flex-flow: column;
     flex-wrap: wrap;
     margin-bottom: 16px;
+  }
+
+  @include e(wrapper) {
+    width: 100%;
   }
 
   @include e(error) {

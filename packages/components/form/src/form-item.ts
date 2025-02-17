@@ -1,5 +1,5 @@
 import type { RuleItem, Values } from 'async-validator'
-import { ExtractPropTypes, InjectionKey, PropType } from 'vue'
+import { ExtractPropTypes, InjectionKey, PropType, Ref } from 'vue'
 
 export type Arrayable<T> = T | T[]
 
@@ -30,7 +30,8 @@ export type FormItemProps = Partial<ExtractPropTypes<typeof formItemProps>>
 
 export interface FormItemContxt extends FormItemProps {
   validate: (trigger: string, callback?: ValidCallback) => Promise<void>
+  validateState: Ref<FormItemValidateState>
   clearValidate: () => void
 }
 
-export const formItemContextKey: InjectionKey<FormItemContxt> = Symbol()
+export const FormItemContextKey: InjectionKey<FormItemContxt> = Symbol()
