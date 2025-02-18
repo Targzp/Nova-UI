@@ -1,42 +1,52 @@
 @use 'mixins/mixins' as *;
 @use 'common/var' as *;
 
-@include b(form-item) {
-  display: flex;
-  margin-bottom: 18px;
-
-  @include e(label) {
+@include b(form) {
+  @include m(inline) {
     display: inline-flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding-right: 8px;
-    height: 32px;
-    line-height: 32px;
 
-    &.is-required::before {
-      content: '*';
-      color: $color-danger;
-      margin-right: 4px;
+    @include b(form-item) {
+      margin-right: 32px;
     }
   }
 
-  @include e(content) {
+  @include b(form-item) {
     display: flex;
-    flex: 1;
-    flex-flow: column;
-    flex-wrap: wrap;
-    position: relative;
-  }
+    margin-bottom: 18px;
 
-  @include e(wrapper) {
-    width: 100%;
-  }
+    @include e(label) {
+      display: inline-flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding-right: 8px;
+      height: 32px;
+      line-height: 32px;
 
-  @include e(error) {
-    color: $color-danger;
-    font-size: 12px;
-    position: absolute;
-    top: 100%;
+      &.is-required::before {
+        content: '*';
+        color: $color-danger;
+        margin-right: 4px;
+      }
+    }
+
+    @include e(content) {
+      display: flex;
+      flex: 1;
+      flex-flow: column;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    @include e(wrapper) {
+      width: 100%;
+    }
+
+    @include e(error) {
+      color: $color-danger;
+      font-size: 12px;
+      position: absolute;
+      top: 100%;
+    }
   }
 }
 

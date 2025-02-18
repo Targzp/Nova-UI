@@ -13,6 +13,10 @@ export const formProps = {
   labelWidth: {
     type: [String, Number] as PropType<string | number>,
     default: 'auto'
+  },
+  inline: {
+    type: Boolean,
+    default: false
   }
 } as const
 
