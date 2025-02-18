@@ -5,7 +5,7 @@
         <slot name="prepend"></slot>
       </div>
       <div
-        :class="[bem.e('wrapper')]"
+        :class="[bem.e('wrapper'), bem.is('error', isError)]"
         @mouseenter="handleHover(true)"
         @mouseleave="handleHover(false)"
       >
@@ -68,11 +68,11 @@ import {
   Clearable
 } from '@nova-ui/components/internal-icon'
 import NvIcon from '@nova-ui/components/icon'
-import { formItemContextKey } from '@nova-ui/components/form'
+import { FormItemContextKey } from '@nova-ui/components/form'
 
 const bem = createNamespace('input')
 
-const formItemContext = inject(formItemContextKey)
+const formItemContext = inject(FormItemContextKey)
 
 defineOptions({
   name: 'nv-input',
@@ -84,6 +84,10 @@ const props = defineProps(inputProps)
 const emit = defineEmits(inputEmits)
 
 const slots = useSlots()
+
+const isError = computed(() => {
+  return formItemContext?.validateState.value === 'error'
+})
 
 const inputRef = ref<HTMLInputElement>()
 const setNativeInputValue = () => {

@@ -16,6 +16,10 @@
     position: relative;
     vertical-align: middle;
     border-radius: 4px;
+
+    &.is-error {
+      border-color: $color-danger;
+    }
   }
 
   @include e(prefix) {
@@ -53,7 +57,10 @@
     height: 30px;
   }
 
-  @include b(input-group) {
+  @include e(group) {
+    display: flex;
+    flex: 1;
+
     @include e(append) {
       display: inline-flex;
       padding: 0 10px;
