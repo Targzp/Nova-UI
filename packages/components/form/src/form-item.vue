@@ -1,7 +1,7 @@
 <template>
   <div :class="[bem.b()]">
     <label
-      :class="bem.e('label')"
+      :class="[bem.e('label'), bem.is('required', isRequired)]"
       :style="{
         width: labelWidth
       }"
@@ -14,11 +14,13 @@
       <div :class="[bem.e('wrapper')]">
         <slot />
       </div>
-      <div v-if="showMessage" :class="bem.e('error')">
-        <slot name="error">
-          {{ validateMessage }}
-        </slot>
-      </div>
+      <Transition>
+        <div v-if="showMessage && validateMessage" :class="bem.e('error')">
+          <slot name="error">
+            {{ validateMessage }}
+          </slot>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -77,6 +79,12 @@ const _rules = computed(() => {
     }
   }
   return rules
+})
+
+const isRequired = computed(() => {
+  return _rules.value.some(rule => {
+    return rule.required
+  })
 })
 
 const getRuleFiltered = (trigger: string) => {

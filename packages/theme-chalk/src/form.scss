@@ -3,6 +3,7 @@
 
 @include b(form-item) {
   display: flex;
+  margin-bottom: 18px;
 
   @include e(label) {
     display: inline-flex;
@@ -11,6 +12,12 @@
     padding-right: 8px;
     height: 32px;
     line-height: 32px;
+
+    &.is-required::before {
+      content: '*';
+      color: $color-danger;
+      margin-right: 4px;
+    }
   }
 
   @include e(content) {
@@ -18,7 +25,7 @@
     flex: 1;
     flex-flow: column;
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    position: relative;
   }
 
   @include e(wrapper) {
@@ -28,5 +35,24 @@
   @include e(error) {
     color: $color-danger;
     font-size: 12px;
+    position: absolute;
+    top: 100%;
   }
+}
+
+.v-enter-active {
+  transition: 0.3s ease;
+  transition-property: transform, opacity;
+}
+
+.v-enter-from {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.v-enter-to {
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top center;
 }
