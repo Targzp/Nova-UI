@@ -1,5 +1,5 @@
 <template>
-  <form :class="bem.b()">
+  <form :class="[bem.b(), inline ? bem.m('inline') : '']">
     <slot></slot>
   </form>
 </template>
