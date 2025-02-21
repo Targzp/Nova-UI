@@ -1,7 +1,7 @@
 <template>
   <div :class="[bem.b()]">
     <label
-      :class="[bem.e('label'), bem.is('required', isRequired)]"
+      :class="[bem.e('label'), bem.is('required', isRequiredAsterisk)]"
       :style="{
         width: labelWidth
       }"
@@ -81,8 +81,8 @@ const _rules = computed(() => {
   return rules
 })
 
-const isRequired = computed(() => {
-  return _rules.value.some(rule => {
+const isRequiredAsterisk = computed(() => {
+  return !formContent?.hideRequiredAsterisk && _rules.value.some(rule => {
     return rule.required
   })
 })

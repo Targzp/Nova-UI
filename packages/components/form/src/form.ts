@@ -17,6 +17,11 @@ export const formProps = {
   inline: {
     type: Boolean,
     default: false
+  },
+  // 	是否隐藏必填字段标签旁边的红色星号
+  hideRequiredAsterisk: {
+    type: Boolean,
+    default: false
   }
 } as const
 
