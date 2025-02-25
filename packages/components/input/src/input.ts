@@ -19,6 +19,10 @@ export const inputProps = {
     type: Boolean,
     default: false
   },
+  showWordLimit: {
+    type: Boolean,
+    default: false
+  },
   disabled: {
     type: Boolean,
     default: false

@@ -41,6 +41,14 @@
           <span v-if="slots.suffixIcon" :class="[bem.e('suffix')]">
             <slot name="suffixIcon"></slot>
           </span>
+          <span
+            v-if="
+              showWordLimit && !showPwdVisible && Number.isFinite(maxLength)
+            "
+            :class="[bem.e('suffix'), bem.e('word-limit')]"
+          >
+            <span>{{ curInputLength }} / {{ maxLength }}</span>
+          </span>
         </div>
       </div>
       <div v-if="slots.append" :class="bem.be('group', 'append')">
@@ -59,7 +67,8 @@ import {
   ref,
   useSlots,
   watch,
-  inject
+  inject,
+  useAttrs
 } from 'vue'
 import { inputEmits, inputProps } from './input'
 import {
@@ -83,6 +92,8 @@ const props = defineProps(inputProps)
 
 const emit = defineEmits(inputEmits)
 
+const attrs = useAttrs()
+
 const slots = useSlots()
 
 const isError = computed(() => {
@@ -94,11 +105,25 @@ const setNativeInputValue = () => {
   const inputEle = inputRef.value
   if (inputEle) {
     inputEle.value = String(props.modelValue)
+    curInputLength.value = inputEle.value.length
   }
 }
 
+const maxLength = computed(() => {
+  if (typeof attrs.maxlength === 'string') {
+    if (!Number.isNaN(parseInt(attrs.maxlength))) {
+      return +attrs.maxlength
+    }
+  } else if (typeof attrs.maxlength === 'number') {
+    return attrs.maxlength
+  }
+  return Infinity
+})
+const curInputLength = ref(0)
+
 const handleInput = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
+  curInputLength.value = value.length
   emit('input', value)
   emit('update:modelValue', value) // 触发事件可以实现双向绑定
 }
