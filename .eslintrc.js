@@ -21,7 +21,8 @@ module.exports = {
         // "vue/singleline-html-element-content-newline": "off",
         "vue/multi-word-component-names": "off",
         "vue/component-definition-name-casing": ["PascalCase" | "kebab-case"],
-        "@typescript-eslint/no-non-null-assertion": "off"
+        "@typescript-eslint/no-non-null-assertion": "off",
+        '@typescript-eslint/no-explicit-any': 'off',
     },
     globals: {
         defineProps:'readonly',

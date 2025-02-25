@@ -32,6 +32,7 @@ export interface FormItemContxt extends FormItemProps {
   validate: (trigger: string, callback?: ValidCallback) => Promise<void>
   validateState: Ref<FormItemValidateState>
   clearValidate: () => void
+  resetField: () => void
 }
 
 export const FormItemContextKey: InjectionKey<FormItemContxt> = Symbol()

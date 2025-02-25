@@ -10,6 +10,7 @@ import { createNamespace } from '@nova-ui/utils/create'
 import { FormContext, FormContextKey, formProps } from './form'
 import { FormItemContxt, ValidCallback } from './form-item'
 import { Values } from 'async-validator'
+import { filterFields } from './utils'
 
 const bem = createNamespace('form')
 
@@ -55,14 +56,22 @@ const addField: FormContext['addField'] = context => {
   fields.push(context)
 }
 
+const resetFields = (properties = []) => {
+  filterFields(fields, properties).forEach(field => {
+    field.resetField()
+  })
+}
+
 provide(FormContextKey, {
   ...props,
   addField,
-  clearValidate
+  clearValidate,
+  resetFields
 })
 
 defineExpose({
   validate,
-  clearValidate
+  clearValidate,
+  resetFields
 })
 </script>

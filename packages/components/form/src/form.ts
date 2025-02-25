@@ -30,6 +30,7 @@ export type FormProps = Partial<ExtractPropTypes<typeof formProps>>
 export interface FormContext extends FormProps {
   addField: (field: FormItemContxt) => void
   clearValidate: () => void
+  resetFields: () => void
 }
 
 export const FormContextKey: InjectionKey<FormContext> = Symbol()

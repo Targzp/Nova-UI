@@ -20,6 +20,7 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.13",
     "express": "^4.21.2",
+    "lodash-unified": "^1.0.3",
     "mockjs": "^1.1.0",
     "multer": "1.4.5-lts.1",
     "typescript": "^5.6.3",
