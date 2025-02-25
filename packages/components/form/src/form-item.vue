@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { createNamespace } from '@nova-ui/utils/create'
+import { createNamespace, getProp } from '@nova-ui/utils'
 import { computed, inject, onMounted, provide, ref } from 'vue'
 import {
   Arrayable,
@@ -39,6 +39,7 @@ import {
 } from './form-item'
 import { FormContextKey } from './form'
 import AsyncValidator, { Values } from 'async-validator'
+import { clone } from 'lodash-unified'
 
 const bem = createNamespace('form-item')
 
@@ -46,9 +47,19 @@ defineOptions({
   name: 'nv-form-item'
 })
 
+let initialValue: any = undefined
+
 const props = defineProps(formItemProps)
 
 const formContent = inject(FormContextKey)
+
+const fieldValue = computed(() => {
+  const model = formContent?.model
+  if (!model || !props.prop) {
+    return
+  }
+  return getProp(model, props.prop).value
+})
 
 const labelWidth = computed(() => {
   const width =
@@ -82,9 +93,12 @@ const _rules = computed(() => {
 })
 
 const isRequiredAsterisk = computed(() => {
-  return !formContent?.hideRequiredAsterisk && _rules.value.some(rule => {
-    return rule.required
-  })
+  return (
+    !formContent?.hideRequiredAsterisk &&
+    _rules.value.some(rule => {
+      return rule.required
+    })
+  )
 })
 
 const getRuleFiltered = (trigger: string) => {
@@ -126,10 +140,9 @@ const validate: FormItemContxt['validate'] = async (
     const validator = new AsyncValidator({
       [modelName]: rules
     })
-    const model = formContent?.model || ''
     return validator
       .validate({
-        [modelName]: model[modelName]
+        [modelName]: fieldValue.value || ''
       })
       .then(() => {
         onValidationSuccesseded()
@@ -152,16 +165,31 @@ const clearValidate = () => {
   validateMessage.value = ''
 }
 
+const resetField = async () => {
+  const model = formContent?.model
+  if (!model || !props.prop) {
+    return
+  }
+  const computedValue = getProp(model, props.prop)
+
+  computedValue.value = initialValue
+  clearValidate()
+}
+
 const context: FormItemContxt = {
   ...props,
   validate,
   validateState,
-  clearValidate
+  clearValidate,
+  resetField
 }
 provide(FormItemContextKey, context)
 
 onMounted(() => {
-  formContent?.addField(context) // 将自身的上下文传递给了父亲
+  if (props.prop) {
+    formContent?.addField(context) // 将自身的上下文传递给了父亲
+    initialValue = clone(fieldValue.value)
+  }
 })
 
 defineExpose({
