@@ -40,7 +40,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    background-color: #fff;
+    background-color: $color-white;
     padding: 0 4px;
     position: absolute;
     right: 0;
@@ -74,7 +74,7 @@
       display: inline-flex;
       padding: 0 10px;
       line-height: 32px;
-      box-shadow: 0 0 0 1px #ccc inset;
+      box-shadow: 0 0 0 1px var(--nv-color-info-light-5) inset;
       margin-left: -1px;
       vertical-align: middle;
     }
@@ -83,17 +83,64 @@
       display: inline-flex;
       padding: 0 10px;
       line-height: 32px;
-      box-shadow: 0 0 0 1px #ccc inset;
+      box-shadow: 0 0 0 1px var(--nv-color-info-light-5) inset;
       margin-right: -1px;
       vertical-align: middle;
     }
   }
 
-  @include e('word-limit') {
+  @include e(word-limit) {
     font-size: 12px;
     color: var(--nv-color-info-light-3);
     display: inline-flex;
     margin-left: 8px;
     align-items: center;
+  }
+}
+
+@include b(textarea) {
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
+  position: relative;
+
+  @include e(inner) {
+    box-sizing: border-box;
+    display: block;
+    outline: none;
+    background: none;
+    appearance: none;
+    border: 1px solid var(--nv-color-info-light-7);
+    border-radius: 4px;
+    transition: border 0.15s ease-in;
+    width: 100%;
+    padding: 5px 11px;
+    resize: both;
+    line-height: 1.5;
+    min-height: 35px;
+
+    &:hover {
+      border-color: var(--nv-color-info-light-3);
+    }
+
+    &:focus-within {
+      border-color: $color-primary;
+    }
+
+    &.is-error {
+      border-color: $color-danger;
+    }
+
+    &.is-error {
+      border-color: $color-danger;
+    }
+  }
+
+  @include e(suffix-wrapper) {
+    display: inline-flex;
+    position: absolute;
+    background-color: $color-white;
+    right: 10px;
+    bottom: 5px;
   }
 }

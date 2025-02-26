@@ -1,5 +1,5 @@
 <template>
-  <div :class="[bem.b()]">
+  <div v-if="type !== 'textarea'" :class="[bem.b()]">
     <div :class="[bem.e('group')]">
       <div v-if="slots.prepend" :class="bem.be('group', 'prepend')">
         <slot name="prepend"></slot>
@@ -56,6 +56,32 @@
       </div>
     </div>
   </div>
+  <div v-else-if="type === 'textarea'" :class="[textareaBem.b()]">
+    <textarea
+      ref="textareaRef"
+      v-bind="$attrs"
+      :class="[textareaBem.e('inner'), textareaBem.is('error', isError)]"
+      :style="{ resize: resize }"
+      :placeholder="placeholder"
+      :disabled="disabled"
+      :readonly="readonly"
+      @input="handleInput"
+      @change="handleChange"
+      @blur="handleBlur"
+      @focus="handleFocus"
+    ></textarea>
+    <div
+      :class="textareaBem.e('suffix-wrapper')"
+      :style="{ right: `calc(100% - ${curTextareaWidth - 11}px)` }"
+    >
+      <span
+        v-if="showWordLimit && Number.isFinite(maxLength)"
+        :class="[bem.e('suffix'), bem.e('word-limit')]"
+      >
+        <span>{{ curInputLength }} / {{ maxLength }}</span>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -80,6 +106,7 @@ import NvIcon from '@nova-ui/components/icon'
 import { FormItemContextKey } from '@nova-ui/components/form'
 
 const bem = createNamespace('input')
+const textareaBem = createNamespace('textarea')
 
 const formItemContext = inject(FormItemContextKey)
 
@@ -102,7 +129,7 @@ const isError = computed(() => {
 
 const inputRef = ref<HTMLInputElement>()
 const setNativeInputValue = () => {
-  const inputEle = inputRef.value
+  const inputEle = props.type !== 'textarea' ? inputRef.value : textareaRef.value
   if (inputEle) {
     inputEle.value = String(props.modelValue)
     curInputLength.value = inputEle.value.length
@@ -196,8 +223,25 @@ const handleHover = (hoverStatus: boolean) => {
   isHover.value = hoverStatus
 }
 
+const textareaRef = ref<HTMLInputElement>()
+const curTextareaWidth = ref(0) // 当前文本域框宽度
+
+const textareaObserver = new ResizeObserver(entries => {
+  for (const entry of entries) {
+    const borderBoxSize = Array.isArray(entry.borderBoxSize)
+      ? entry.borderBoxSize[0]
+      : entry.borderBoxSize
+    curTextareaWidth.value = borderBoxSize.inlineSize
+  }
+})
+
 onMounted(() => {
   // 组件加载完毕后 设置一次输入框的值
   setNativeInputValue()
+
+  if (props.type === 'textarea' && textareaRef.value) {
+    textareaObserver.observe(textareaRef.value)
+    curTextareaWidth.value = textareaRef.value.offsetWidth
+  }
 })
 </script>
