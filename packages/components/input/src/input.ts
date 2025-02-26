@@ -1,5 +1,7 @@
 import { ExtractPropTypes, PropType } from 'vue'
 
+type ResizeType = 'none' | 'both' | 'horizontal' | 'vertical'
+
 export const inputProps = {
   type: {
     type: String,
@@ -33,6 +35,13 @@ export const inputProps = {
   },
   label: {
     type: String
+  },
+  resize: {
+    type: String as PropType<ResizeType>,
+    default: 'vertical',
+    validator: (value: string) => {
+      return ['none', 'both', 'horizontal', 'vertical'].includes(value)
+    }
   }
 } as const
 

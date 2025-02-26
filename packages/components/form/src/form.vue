@@ -11,6 +11,7 @@ import { FormContext, FormContextKey, formProps } from './form'
 import { FormItemContxt, ValidCallback } from './form-item'
 import { Values } from 'async-validator'
 import { filterFields } from './utils'
+import { Arrayable } from '@nova-ui/utils'
 
 const bem = createNamespace('form')
 
@@ -56,7 +57,7 @@ const addField: FormContext['addField'] = context => {
   fields.push(context)
 }
 
-const resetFields = (properties = []) => {
+const resetFields = (properties: Arrayable<string> = []) => {
   filterFields(fields, properties).forEach(field => {
     field.resetField()
   })
