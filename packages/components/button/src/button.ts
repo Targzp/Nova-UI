@@ -16,7 +16,13 @@ export type NativeType = 'button' | 'submit' | 'reset'
 export type Placement = 'left' | 'right'
 
 export const buttonProps = {
-  size: String as PropType<Size>,
+  size: {
+    type: String as PropType<Size>,
+    validator: (val: string) => {
+      return ['tiny', 'small', 'medium', 'large'].includes(val)
+    },
+    default: 'medium'
+  },
   type: {
     type: String as PropType<Type>,
     validator: (val: string) => {
