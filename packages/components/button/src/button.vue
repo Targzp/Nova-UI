@@ -8,6 +8,7 @@
       bem.is('loading', loading),
       bem.is('disabled', disabled)
     ]"
+    v-bind="$attrs"
     :type="nativeType"
     :disabled="disabled || loading"
     @click="emit('click', $event)"
@@ -42,7 +43,7 @@ import { useSlots } from 'vue'
 
 const bem = createNamespace('button')
 
-const props = defineProps(buttonProps)
+defineProps(buttonProps)
 
 const emit = defineEmits(buttonEmits)
 

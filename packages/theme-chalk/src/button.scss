@@ -7,14 +7,15 @@
   cursor: pointer;
   outline: none;
   border: #fafafa;
-  border-radius: 5px;
+  border-radius: 4px;
   user-select: none;
-  min-height: 40px;
+  min-height: 32px;
   line-height: 1;
   vertical-align: middle;
   padding: 0 20px;
-  box-shadow: 0 10px 5px -5px #ececec;
+  box-shadow: 0 7px 5px -5px var(--nv-color-info-light-7);
   transition: all 0.1s linear;
+  font-size: 14px;
 
   @include m(tiny) {
     padding: 0 15px;
@@ -41,7 +42,7 @@
   }
 
   @include when(round) {
-    border-radius: 20px;
+    border-radius: 15px;
   }
 
   @include m(primary) {
@@ -60,6 +61,24 @@
     @include button-variant($color-white, $color-danger, $color-danger);
   }
 
+  @include m(default) {
+    @include button-variant(
+      $color-info,
+      $color-white,
+      var(--nv-color-info-light-5)
+    );
+    border-width: 1px;
+    border-style: solid;
+
+    &:hover {
+      border-color: $color-primary;
+    }
+  }
+
+  @include m(info) {
+    @include button-variant($color-white, $color-info, $color-info);
+  }
+
   @include e('left-icon') {
     margin-right: 5px;
   }
@@ -73,7 +92,7 @@
   }
 
   &:active {
-    transform: scale(0.99);
+    transform: scale(0.994);
     box-shadow: none;
   }
 }
