@@ -1,0 +1,35 @@
+@use 'mixins/mixins' as *;
+@use 'common/var' as *;
+
+@include b(tooltip) {
+  display: inline-flex;
+
+  @include e(popper) {
+    color: $color-white;
+    background-color: var(--nv-text-color-primary);
+    border: 1px solid var(--nv-text-color-primary);
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    min-width: 10px;
+    padding: 5px 11px;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+  }
+
+  @include e(arrow) {
+    position: absolute;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      z-index: -1;
+      background-color: var(--nv-text-color-primary);
+      border: 1px solid var(--nv-text-color-primary);
+      box-sizing: border-box;
+      transform: rotate(45deg);
+    }
+  }
+}

@@ -9,7 +9,6 @@ export type Type =
   | 'danger'
   | 'info'
   | 'default'
-  | ''
 
 export type NativeType = 'button' | 'submit' | 'reset'
 
@@ -33,11 +32,10 @@ export const buttonProps = {
         'warning',
         'danger',
         'info',
-        'default',
-        ''
+        'default'
       ].includes(val)
     },
-    default: ''
+    default: 'default'
   },
   round: Boolean,
   loading: Boolean,

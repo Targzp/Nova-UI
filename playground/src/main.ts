@@ -6,6 +6,7 @@ import Tree from '@nova-ui/components/tree'
 import Checkbox from '@nova-ui/components/checkbox'
 import Button from '@nova-ui/components/button'
 import Input from '@nova-ui/components/Input'
+import Tooltip from '@nova-ui/components/tooltip'
 import { FormItem, Form } from '@nova-ui/components/form'
 import Upload from '@nova-ui/components/upload'
 import Calendar from '@nova-ui/components/calendar'
@@ -22,7 +23,8 @@ const plugins = [
   Form,
   Upload,
   Calendar,
-  VirtualScrollList
+  VirtualScrollList,
+  Tooltip
 ]
 
 const app = createApp(App)

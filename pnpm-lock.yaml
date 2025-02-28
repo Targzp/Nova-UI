@@ -17,6 +17,9 @@ importers:
       '@nova-ui/utils':
         specifier: workspace:*
         version: link:packages/utils
+      '@popperjs/core':
+        specifier: ^2.11.8
+        version: 2.11.8
       '@types/mockjs':
         specifier: ^1.0.10
         version: 1.0.10
@@ -1379,6 +1382,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+    dev: false
 
   /@rollup/plugin-commonjs@28.0.2(rollup@4.24.0):
     resolution: {integrity: sha512-BEFI2EDqzl+vA1rl97IDRZ61AIwGH093d9nz8+dThxJNH8oSoB7MjWvPCX3dkaK1/RCJ/1v/R1XB15FuSs0fQw==}
