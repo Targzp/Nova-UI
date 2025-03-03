@@ -3,18 +3,18 @@
     <div ref="triggerNode" :class="bem.e('trigger')" v-on="events">
       <slot></slot>
     </div>
-    <div v-if="isOpen" ref="popperNode" :class="bem.e('popper')">
-      <span :class="bem.e('arrow')" :style="popperArrowStyle[placement]"></span>
+    <div v-if="isOpen" id="tooltip" ref="popperNode" :class="bem.e('popper')">
       <slot name="content">
         {{ content }}
       </slot>
+      <div id="arrow" data-popper-arrow></div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { createNamespace } from '@nova-ui/utils'
-import { computed, CSSProperties, onUnmounted, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import { createPopper } from '@popperjs/core'
 import { useClickOutside } from '../../../hooks'
 
@@ -52,27 +52,6 @@ const popperOptions = computed(() => {
     ...props.popperOptions
   }
 })
-
-const popperArrowStyle: Record<string, CSSProperties> = {
-  top: {
-    bottom: '-5px',
-    left: '50%',
-    transform: 'translate(-50%, 0px)'
-  },
-  bottom: {
-    top: '-5px',
-    left: '50%',
-    transform: 'translate(-50%, 0px)'
-  },
-  left: {
-    right: '-5px',
-    transform: 'translate(0px, 50%)'
-  },
-  right: {
-    left: '-5px',
-    transform: 'translate(0px, 50%)'
-  }
-}
 
 const isOpen = ref(false)
 
