@@ -76,6 +76,8 @@ const events = ref<Record<string, any>>({})
 const outerEvents = ref<Record<string, any>>({})
 
 const attachEvents = () => {
+  if (props.disabled) return
+
   if (props.trigger === 'hover') {
     events.value['mouseenter'] = handleTooltipOpen
     outerEvents.value['mouseleave'] = handleTooltipClose

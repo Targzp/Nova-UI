@@ -29,6 +29,9 @@ export const tooltipProps = {
   popperClass: {
     type: String
   },
+  disabled: {
+    type: Boolean
+  },
   popperOptions: {
     type: Object as PropType<Partial<Options>>
   }
