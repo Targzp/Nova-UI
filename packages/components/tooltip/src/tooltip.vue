@@ -7,7 +7,7 @@
       <slot name="content">
         {{ content }}
       </slot>
-      <div id="arrow" data-popper-arrow></div>
+      <div v-if="showArrow" id="arrow" data-popper-arrow></div>
     </div>
   </div>
 </template>

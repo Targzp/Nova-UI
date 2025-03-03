@@ -15,6 +15,10 @@ export const tooltipProps = {
     type: String as PropType<Placement>,
     default: 'top'
   },
+  showArrow: {
+    type: Boolean,
+    default: true
+  },
   popperOptions: {
     type: Object as PropType<Partial<Options>>
   }
