@@ -3,12 +3,14 @@
     <div ref="triggerNode" :class="bem.e('trigger')" v-on="events">
       <slot></slot>
     </div>
-    <div v-if="isOpen" id="tooltip" ref="popperNode" :class="bem.e('popper')">
-      <slot name="content">
-        {{ content }}
-      </slot>
-      <div v-if="showArrow" id="arrow" data-popper-arrow></div>
-    </div>
+    <Transition :name="transition">
+      <div v-if="isOpen" id="tooltip" ref="popperNode" :class="bem.e('popper')">
+        <slot name="content">
+          {{ content }}
+        </slot>
+        <div v-if="showArrow" id="arrow" data-popper-arrow></div>
+      </div>
+    </Transition>
   </div>
 </template>
 
