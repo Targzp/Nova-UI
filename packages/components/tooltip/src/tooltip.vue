@@ -4,7 +4,12 @@
       <slot></slot>
     </div>
     <Transition :name="transition">
-      <div v-if="isOpen" id="tooltip" ref="popperNode" :class="bem.e('popper')">
+      <div
+        v-if="isOpen"
+        id="tooltip"
+        ref="popperNode"
+        :class="[bem.e('popper'), popperClass]"
+      >
         <slot name="content">
           {{ content }}
         </slot>

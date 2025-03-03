@@ -26,6 +26,9 @@ export const tooltipProps = {
   transition: {
     type: String
   },
+  popperClass: {
+    type: String
+  },
   popperOptions: {
     type: Object as PropType<Partial<Options>>
   }
