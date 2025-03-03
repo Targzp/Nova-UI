@@ -19,6 +19,10 @@ export const tooltipProps = {
     type: Boolean,
     default: true
   },
+  offset: {
+    type: Number,
+    default: 12
+  },
   popperOptions: {
     type: Object as PropType<Partial<Options>>
   }
