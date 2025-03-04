@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 import { createNamespace } from '@nova-ui/utils'
-import { computed, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { createPopper } from '@popperjs/core'
 import { useClickOutside } from '../../../hooks'
 
@@ -61,15 +61,28 @@ const popperOptions = computed(() => {
 })
 
 const isOpen = ref(false)
+const manualVisible = ref(false)
+const selfVisible = ref(false)
+
+const handleEmitVisible = (val: boolean) => {
+  if (typeof props.visible === 'boolean') {
+    emit('update:visible', val)
+  }
+}
 
 const handleTooltipOpen = () => {
   isOpen.value = true
+  selfVisible.value = true
   emit('visible-change', true)
+  handleEmitVisible(true)
 }
 
 const handleTooltipClose = () => {
   isOpen.value = false
+  selfVisible.value = false
+  manualVisible.value = false
   emit('visible-change', false)
+  handleEmitVisible(false)
 }
 
 const events = ref<Record<string, any>>({})
@@ -87,10 +100,23 @@ const attachEvents = () => {
 }
 
 useClickOutside(popperContainNode, () => {
-  if (props.trigger && isOpen.value) {
-    handleTooltipClose()
+  if (manualVisible.value && !selfVisible.value) {
+    manualVisible.value = false
+  } else {
+    if (props.trigger && isOpen.value) {
+      handleTooltipClose()
+    }
   }
 })
+
+watch(
+  () => props.visible,
+  async val => {
+    manualVisible.value = val
+
+    isOpen.value = val
+  }
+)
 
 watch(
   isOpen,
@@ -124,6 +150,10 @@ watch(
 )
 
 attachEvents()
+
+onMounted(() => {
+  isOpen.value = !!props.visible
+})
 
 onUnmounted(() => {
   if (popperInstance) {

@@ -4,6 +4,9 @@ import type { Placement, Options } from '@popperjs/core'
 export type TriggerTypes = 'hover' | 'click'
 
 export const tooltipProps = {
+  visible: {
+    type: Boolean
+  },
   content: {
     type: String
   },
@@ -38,7 +41,8 @@ export const tooltipProps = {
 }
 
 export const tooltipEmits = {
-  'visible-change': (visible: boolean) => typeof visible === 'boolean'
+  'visible-change': (visible: boolean) => typeof visible === 'boolean',
+  'update:visible': (visible: boolean) => typeof visible === 'boolean'
 }
 
 export type TooltipEmits = typeof tooltipEmits
