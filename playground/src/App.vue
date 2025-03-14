@@ -90,8 +90,9 @@ const handleClick = () => {
 }
 
 const user = ref({
-  name: '',
-  age: ''
+  name: 'hcm',
+  age: '',
+  remark: ''
 })
 
 const rules = [
@@ -127,6 +128,10 @@ const handleItemValidate = () => {
 
 const handleClearValidate = () => {
   formRef.value?.clearValidate()
+}
+
+const handleReset = () => {
+  formRef.value?.resetFields(['remark'])
 }
 
 const curDate = ref(new Date())
@@ -166,7 +171,7 @@ console.log('items: ', items.value)
   </nv-icon> -->
 
   <!-- 在使用树组件的时候，会传递一个树型的结构 -->
-  <nv-tree
+  <!-- <nv-tree
     v-model:selected-keys="value"
     :data="data"
     label-field="label"
@@ -192,7 +197,7 @@ console.log('items: ', items.value)
       </nv-icon>
     </template>
     点击
-  </nv-button>
+  </nv-button> -->
 
   <!-- <nv-input
     v-model="userName"
@@ -221,38 +226,52 @@ console.log('items: ', items.value)
     :model="user"
     :rules="{
       name: {
-        min: 6,
+        min: 3,
         max: 10,
-        message: '用户名至少6-10位',
+        message: '用户名至少3-10位',
         trigger: ['blur', 'change']
       },
       age: {
         required: true,
         message: '请输入年龄',
         trigger: 'blur'
+      },
+      remark: {
+        required: true,
+        message: '请输入备注',
+        trigger: 'blur'
       }
     }"
   >
     <nv-form-item :rules="rules" prop="name">
-      <template #label>用户名</template>
+      <template #label> 用户名 </template>
       <nv-input v-model="user.name" placeholder="请输入用户名"></nv-input>
     </nv-form-item>
     <nv-form-item ref="ageFormItemRef" prop="age">
-      <template #label>年龄</template>
+      <template #label> 年龄 </template>
       <nv-input v-model="user.age" placeholder="请输入年龄"></nv-input>
     </nv-form-item>
+    <nv-form-item prop="remark">
+      <template #label> 备注 </template>
+      <nv-input
+        v-model="user.remark"
+        type="textarea"
+        maxlength="100"
+        show-word-limit
+        placeholder="请输入备注"
+      ></nv-input>
+    </nv-form-item>
   </nv-form>
-  <nv-button size="tiny" type="primary" @click="handleItemValidate">
-    验证年龄
-  </nv-button>
+  <nv-button size="tiny" @click="handleItemValidate"> 验证年龄 </nv-button>
   <nv-button size="tiny" type="primary" @click="handleClearValidate">
     清除验证结果
   </nv-button>
+  <nv-button size="tiny" type="primary" @click="handleReset"> 重置 </nv-button>
   <nv-button size="tiny" type="primary" @click="handleValidate">
     提交
   </nv-button>
 
-  <UploadDemo />
+  <!-- <UploadDemo />
   <nv-calendar v-model="curDate">
     <template #date-cell="{ data }">
       <p :class="data.isSelected ? 'is-selected' : ''">
@@ -260,16 +279,23 @@ console.log('items: ', items.value)
         {{ data.isSelected ? '✔️' : '' }}
       </p>
     </template>
-  </nv-calendar>
+  </nv-calendar> -->
 
-  <nv-virtual-scroll-list
+  <!-- <nv-virtual-scroll-list
     class="virtual-list"
     :data-sources="items"
     data-key="id"
     :keeps="30"
     :estimate-size="80"
     :data-component="ListItem"
-  ></nv-virtual-scroll-list>
+  ></nv-virtual-scroll-list> -->
+
+  <div :style="{ marginTop: '20px', marginBottom: '20px' }">
+    asdasdasdasdasdadasdasda
+    <nv-tooltip content="testasasdasdasdasdasdsadasdasd" placement="top" trigger="click">
+      <nv-button>测试tooltip</nv-button>
+    </nv-tooltip>
+  </div>
 </template>
 
 <style scoped lang="scss">

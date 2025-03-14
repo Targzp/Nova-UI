@@ -1,0 +1,64 @@
+@use 'mixins/mixins' as *;
+@use 'common/var' as *;
+
+@include b(tooltip) {
+  display: inline-flex;
+  position: relative;
+
+  @include e(popper) {
+    color: $color-white;
+    background-color: var(--nv-text-color-primary);
+    border: 1px solid var(--nv-text-color-primary);
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 20px;
+    min-width: 10px;
+    padding: 5px 11px;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+  }
+}
+
+#arrow,
+#arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+#arrow {
+  visibility: hidden;
+}
+
+#arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}
+
+#tooltip[data-popper-placement^='top'] > #arrow {
+  bottom: -4px;
+}
+
+#tooltip[data-popper-placement^='bottom'] > #arrow {
+  top: -4px;
+}
+
+#tooltip[data-popper-placement^='left'] > #arrow {
+  right: -4px;
+}
+
+#tooltip[data-popper-placement^='right'] > #arrow {
+  left: -4px;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
