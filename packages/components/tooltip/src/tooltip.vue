@@ -109,6 +109,47 @@ useClickOutside(popperContainNode, () => {
   }
 })
 
+const getShadowCSSRule = (
+  offset: number,
+  placement: 'top' | 'left' | 'right' | 'bottom'
+) => {
+  const rule = `.nv-tooltip::after {
+    position: absolute;
+    content: '';
+    opacity: 0;
+    z-index: 10;
+    width: ${['top', 'bottom'].includes(placement) ? '100%' : offset + 'px'};
+    height: ${['left', 'right'].includes(placement) ? '100%' : offset + 'px'};
+    ${placement === 'top' ? `top: -${offset}px;` : ''}
+    ${placement === 'bottom' ? `bottom: -${offset}px;` : ''}
+    ${placement === 'left' ? `left: -${offset}px;` : ''}
+    ${placement === 'right' ? `right: -${offset}px;` : ''}
+    
+  }`
+  return rule
+}
+
+/**
+ * 设置popper与实体间隔阴影，防止移动到popper时，popper框消失
+ */
+const handleSetTooltipShadow = () => {
+  if (!popperInstance) {
+    return
+  }
+  const { placement } = popperInstance.state.options
+  let _placement =
+    placement.indexOf('-') > -1 ? placement.split('-')[0] : placement
+  if (_placement === 'auto') {
+    _placement = 'right'
+  }
+  const cssRule = getShadowCSSRule(
+    props.offset,
+    _placement as 'top' | 'left' | 'right' | 'bottom'
+  )
+  const styleSheets = document.styleSheets[0]
+  styleSheets.insertRule(cssRule, styleSheets.cssRules.length)
+}
+
 watch(
   () => props.visible,
   async val => {
@@ -128,6 +169,7 @@ watch(
           popperNode.value,
           popperOptions.value
         )
+        handleSetTooltipShadow()
       } else {
         popperInstance?.destroy()
       }
